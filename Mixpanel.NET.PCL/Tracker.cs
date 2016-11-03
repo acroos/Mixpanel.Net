@@ -30,7 +30,33 @@ namespace Mixpanel.NET.PCL
         /// <returns>True if the profile was deleted, false otherwise</returns>
         public Task<bool> Delete()
         {
-            throw new NotImplementedException ();
+            if (_distinctId == null)
+            {
+                throw new Exception ("Cannot delete a profile when distinct id is not set");
+            }
+            var id = _distinctId;
+            _distinctId = null;
+
+            return Delete (id);
+        }
+
+        /// <summary>
+        /// Permanently delete the profile from Mixpanel, along with all of its properties. 
+        /// </summary>
+        /// <returns>True if the profile was deleted, false otherwise</returns>
+        /// <param name="distinctId">Distinct identifier.</param>
+        public Task<bool>Delete(string distinctId)
+        {
+            var dataDictionary = new Dictionary<string, object>
+            {
+                { "$token", _token },
+                { "$distinct_id", _distinctId },
+                { "$delete", string.Empty }
+            };
+
+            var request = GetRequestMessageFromDictionaryAndEndpoint (Constants.EngageUri, dataDictionary);
+
+            return MakeRequest (request);
         }
 
         /// <summary>
@@ -201,6 +227,11 @@ namespace Mixpanel.NET.PCL
             return request;
         }
     
+        /// <summary>
+        /// Makes the http request given a message
+        /// </summary>
+        /// <returns>True if the request succeeded, false otherwise</returns>
+        /// <param name="request">The http request message</param>
         private async Task<bool> MakeRequest(HttpRequestMessage request)
         {
             using (var client = new HttpClient ())
