@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Mixpanel.NET.PCL</id>
+    <version>0.0.1</version>
+    <authors>austinroos</authors>
+    <owners>austinroos</owners>
+    <licenseUrl>https://github.com/acroos/Mixpanel.Net/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/acroos/Mixpanel.Net</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A .NET client for tracking evnets in Mixpanel</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>PCL Mixpanel .NET</tags>
+  </metadata>
+  <dependencies>
+    <dependency id="Newtonsoft.Json" version="9.0" />
+    <dependency id="Microsoft.Net.Http" />
+  </dependencies>
+</package>
