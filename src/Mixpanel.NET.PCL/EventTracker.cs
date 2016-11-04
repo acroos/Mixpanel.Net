@@ -90,5 +90,15 @@ namespace Mixpanel.NET.PCL
         {
             return Track (null, eventName, properties);
         }
+
+        /// <summary>
+        /// Track a new event
+        /// </summary>
+        /// <returns>True if event was tracked, false otherwise</returns>
+        /// <param name="eventName">Event name.</param>
+        public static Task<bool> Track (string eventName)
+        {
+            return Track (null, eventName, null);
+        }
     }
 }
