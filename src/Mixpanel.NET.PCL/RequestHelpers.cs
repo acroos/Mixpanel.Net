@@ -21,14 +21,9 @@ namespace Mixpanel.NET.PCL
             var json = JsonConvert.SerializeObject (dict);
             var base64String = Convert.ToBase64String (Encoding.UTF8.GetBytes (json));
 
-            var data = new []
-            {
-                new KeyValuePair<string, string> ("data", base64String)
-            };
-
             var request = new HttpRequestMessage (HttpMethod.Post, endpoint)
             {
-                Content = new FormUrlEncodedContent (data)
+                Content = new StringContent ($"data={base64String}")
             };
             request.Content.Headers.ContentType = new MediaTypeHeaderValue ("application/x-www-form-urlencoded");
 

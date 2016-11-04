@@ -3,11 +3,12 @@ namespace Mixpanel.NET.PCL
 {
     public static class Client
     {
-        internal static string Token { get; private set; }
+        private static string _token;
+        internal static string Token => _token;
 
         public static void Initialize(string token)
         {
-            Token = token;
+            _token = token;
         }
     }
 }
