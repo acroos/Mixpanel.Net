@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Mixpanel.NET.PCL</id>
+    <version>0.0.1</version>
+    <title>Mixpanel.NET.PCL</title>
+    <authors>Austin Roos</authors>
+    <owners>Austin Roos</owners>
+    <projectUrl>https://www.github.com/acroos/Mixpanel.Net</projectUrl>
+    <licenseUrl>https://www.github.com/acroos/Mixpanel.Net/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Simple client for tracking events with Mixpanel</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+  </metadata>
+  <files>
+    <file src="Mixpanel.NET.PCL.dll" target="lib" />
+  </files>
+</package>

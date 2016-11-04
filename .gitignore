@@ -1,7 +1,10 @@
 build
-tools
+tools/*
 test
 packages
 bin
 obj
 *.userprefs
+TestResults.xml
+
+!tools/packages.config

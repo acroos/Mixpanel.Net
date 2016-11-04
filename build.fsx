@@ -8,8 +8,15 @@ let testDir = "./test/"
 let nugetBuildDir = buildDir
 let nugetDistDir = (buildDir + "nuget/")
 
+let releaseNotesDir = "./release-notes/"
+
+let testResultsFile = "TestResults.xml"
+let versionFile = "version.txt"
+let accessKeyFile = "access-key.txt"
+
 // Targets
 Target "Clean" (fun _ ->
+  DeleteFile testResultsFile
   CleanDirs [buildDir; testDir]
 )
 
@@ -26,11 +33,30 @@ Target "BuildTest" (fun _ ->
 )
 
 Target "UnitTests" (fun _ ->
-  !! (testDir + "*.dll")
+  !! (testDir + "Mixpanel.NET.PCL.UnitTests.dll")
     |> NUnit (fun p ->
       {p with
-        OutputFile = "TestResults.xml"
+        OutputFile = testResultsFile
         DisableShadowCopy = true})
+)
+
+Target "CreatePackage" (fun _ ->
+  let versionText = ReadFileAsString versionFile
+  let version = trim versionText
+  let releaseNotesFile = releaseNotesDir + version + ".md"
+  let releaseNotes = ReadFileAsString releaseNotesFile
+  let accessKeyText = ReadFileAsString accessKeyFile
+  let accessKey = trim accessKeyText
+
+  CreateDir nugetBuildDir
+  CreateDir nugetDistDir
+  NuGet (fun p ->
+    {p with
+      Version = version
+      ReleaseNotes = releaseNotes
+      OutputPath = nugetDistDir
+      WorkingDir = nugetBuildDir})
+      "Mixpanel.NET.nuspec"
 )
 
 // Dependencies
@@ -38,6 +64,7 @@ Target "UnitTests" (fun _ ->
   ==> "BuildLibrary"
   ==> "BuildTest"
   ==> "UnitTests"
+  ==> "CreatePackage"
 
 // Start
-RunTargetOrDefault "UnitTests"
+RunTargetOrDefault "CreatePackage"
