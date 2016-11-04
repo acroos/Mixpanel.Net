@@ -12,7 +12,6 @@ let releaseNotesDir = "./release-notes/"
 
 let testResultsFile = "TestResults.xml"
 let versionFile = "version.txt"
-let accessKeyFile = "access-key.txt"
 
 // Targets
 Target "Clean" (fun _ ->
@@ -45,8 +44,6 @@ Target "CreatePackage" (fun _ ->
   let version = trim versionText
   let releaseNotesFile = releaseNotesDir + version + ".md"
   let releaseNotes = ReadFileAsString releaseNotesFile
-  let accessKeyText = ReadFileAsString accessKeyFile
-  let accessKey = trim accessKeyText
 
   CreateDir nugetBuildDir
   CreateDir nugetDistDir

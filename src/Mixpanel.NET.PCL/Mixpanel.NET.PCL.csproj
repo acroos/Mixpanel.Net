@@ -29,13 +29,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tracker.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="IMixpanelEvent.cs" />
     <Compile Include="Converters\MixpanelEventConverter.cs" />
     <Compile Include="Converters\PropertyNameConverter.cs" />
     <Compile Include="Attributes\MixpanelIgnoreAttribute.cs" />
     <Compile Include="Attributes\MixpanelPropertyAttribute.cs" />
+    <Compile Include="EventTracker.cs" />
+    <Compile Include="Profile.cs" />
+    <Compile Include="Client.cs" />
+    <Compile Include="RequestHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
