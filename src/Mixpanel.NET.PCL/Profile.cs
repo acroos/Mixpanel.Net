@@ -44,18 +44,7 @@ namespace Mixpanel.NET.PCL
         /// <param name="properties">Properties.</param>
         public Task<bool> Add(Dictionary<string, int> properties)
         {
-            var dataDictionary = new Dictionary<string, object>
-            {
-                { "$token", Client.Token },
-                { "$distinct_id", _distinctId },
-                { "$add", properties }
-            };
-
-            var request = 
-                RequestHelpers.GetRequestMessageFromDictionaryAndEndpoint (Constants.EngageUri,
-                                                               dataDictionary);
-
-            return RequestHelpers.MakeRequest (request);
+            return Engage ("$add", properties);
         }
 
         /// <summary>
@@ -65,18 +54,7 @@ namespace Mixpanel.NET.PCL
         /// <param name="properties">Properties.</param>
         public Task<bool> Append (Dictionary<string, string> properties)
         {
-            var dataDictionary = new Dictionary<string, object>
-            {
-                { "$token", Client.Token },
-                { "$distinct_id", _distinctId },
-                { "$append", properties }
-            };
-
-            var request =
-                RequestHelpers.GetRequestMessageFromDictionaryAndEndpoint (Constants.EngageUri,
-                                                               dataDictionary);
-
-            return RequestHelpers.MakeRequest (request);
+            return Engage ("$append", properties);
         }
 
         /// <summary>
@@ -85,38 +63,7 @@ namespace Mixpanel.NET.PCL
         /// <returns>True if the profile was deleted, false otherwise</returns>
         public Task<bool> Delete ()
         {
-            var dataDictionary = new Dictionary<string, object>
-            {
-                { "$token", Client.Token },
-                { "$distinct_id", _distinctId },
-                { "$delete", string.Empty }
-            };
-
-            var request =
-                RequestHelpers.GetRequestMessageFromDictionaryAndEndpoint (Constants.EngageUri,
-                                                                           dataDictionary);
-
-            return RequestHelpers.MakeRequest (request);
-        }
-
-        /// <summary>
-        /// Engage a new user with a distinct id.
-        /// This will not add any further information to a profile.
-        /// </summary>
-        /// <returns>True if the engage worked, false otherwise</returns>
-        public Task<bool> Engage ()
-        {
-            var dataDictionary = new Dictionary<string, object>
-            {
-                { "$token", Client.Token },
-                { "$distinct_id", _distinctId }
-            };
-
-            var request =
-                RequestHelpers.GetRequestMessageFromDictionaryAndEndpoint (Constants.EngageUri,
-                                                                           dataDictionary);
-
-            return RequestHelpers.MakeRequest (request);
+            return Engage ("$delete", string.Empty);
         }
 
         /// <summary>
@@ -127,18 +74,7 @@ namespace Mixpanel.NET.PCL
         /// <param name="properties">Properties.</param>
         public Task<bool> Remove (Dictionary<string, string> properties)
         {
-            var dataDictionary = new Dictionary<string, object>
-            {
-                { "$token", Client.Token },
-                { "$distinct_id", _distinctId },
-                { "$remove", properties }
-            };
-
-            var request =
-                RequestHelpers.GetRequestMessageFromDictionaryAndEndpoint (Constants.EngageUri,
-                                                               dataDictionary);
-
-            return RequestHelpers.MakeRequest (request);
+            return Engage ("$remove", properties);
         }
 
 
@@ -151,23 +87,7 @@ namespace Mixpanel.NET.PCL
         /// <param name="properties">Properties of the profile</param>
         public Task<bool> Set (Dictionary<string, object> properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException (nameof (properties));
-            }
-
-            var dataDictionary = new Dictionary<string, object>
-            {
-                { "$token", Client.Token },
-                { "$distinct_id", _distinctId },
-                { "$set", properties }
-            };
-
-            var request =
-                RequestHelpers.GetRequestMessageFromDictionaryAndEndpoint (Constants.EngageUri,
-                                                                           dataDictionary);
-
-            return RequestHelpers.MakeRequest (request);
+            return Engage ("$set", properties);
         }
 
         /// <summary>
@@ -178,23 +98,7 @@ namespace Mixpanel.NET.PCL
         /// <param name="properties">Properties of the profile</param>
         public Task<bool> SetOnce (Dictionary<string, object> properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException (nameof (properties));
-            }
-
-            var dataDictionary = new Dictionary<string, object>
-            {
-                { "$token", Client.Token },
-                { "$distinct_id", _distinctId },
-                { "$set_once", properties }
-            };
-
-            var request =
-                RequestHelpers.GetRequestMessageFromDictionaryAndEndpoint (Constants.EngageUri,
-                                                                           dataDictionary);
-
-            return RequestHelpers.MakeRequest (request);
+            return Engage ("$set_once", properties);
         }
 
         /// <summary>
@@ -202,20 +106,9 @@ namespace Mixpanel.NET.PCL
         /// The list values in the request are merged with the existing list on the user profile, ignoring duplicate list values.
         /// </summary>
         /// <param name="properties">Properties.</param>
-        public Task<bool> Union (Dictionary<string, string[]> properties)
+        public Task<bool> Union (Dictionary<string, string []> properties)
         {
-            var dataDictionary = new Dictionary<string, object>
-            {
-                { "$token", Client.Token },
-                { "$distinct_id", _distinctId },
-                { "$union", properties }
-            };
-
-            var request =
-                RequestHelpers.GetRequestMessageFromDictionaryAndEndpoint (Constants.EngageUri,
-                                                               dataDictionary);
-
-            return RequestHelpers.MakeRequest (request);
+            return Engage ("$union", properties);
         }
 
         /// <summary>
@@ -224,16 +117,31 @@ namespace Mixpanel.NET.PCL
         /// <param name="propertyNames">Property names.</param>
         public Task<bool> Unset (string[] propertyNames)
         {
+            return Engage ("$unset", propertyNames);
+        }
+
+        /// <summary>
+        /// Engage a new user with a distinct id.
+        /// This will not add any further information to a profile.
+        /// </summary>
+        /// <returns>True if the engage worked, false otherwise</returns>
+        private Task<bool> Engage (string operation, object properties)
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException (nameof (properties));
+            }
+                
             var dataDictionary = new Dictionary<string, object>
             {
                 { "$token", Client.Token },
                 { "$distinct_id", _distinctId },
-                { "$unset", propertyNames }
+                { operation, properties }
             };
 
             var request =
                 RequestHelpers.GetRequestMessageFromDictionaryAndEndpoint (Constants.EngageUri,
-                                                               dataDictionary);
+                                                                           dataDictionary);
 
             return RequestHelpers.MakeRequest (request);
         }
