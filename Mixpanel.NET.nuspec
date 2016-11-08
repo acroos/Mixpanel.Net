@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Mixpanel.NET.PCL</id>
-    <version>0.0.1</version>
+    <version>@build.number@</version>
     <title>Mixpanel.NET.PCL</title>
     <authors>Austin Roos</authors>
     <owners>Austin Roos</owners>
@@ -10,7 +10,7 @@
     <licenseUrl>https://www.github.com/acroos/Mixpanel.Net/blob/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Simple client for tracking events with Mixpanel</description>
-    <releaseNotes>Initial release</releaseNotes>
+    <releaseNotes>@releaesNotes@</releaseNotes>
     <copyright>Copyright 2016</copyright>
   </metadata>
   <files>
