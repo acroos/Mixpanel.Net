@@ -10,10 +10,10 @@ namespace Mixpanel.NET.PCL
         /// <summary>
         /// Track a new event
         /// </summary>
-        /// <returns>True if event was tracked, false otherwise</returns>
+        /// <returns>The response from mixpanel</returns>
         /// <param name="profile">Profile.</param>
         /// <param name="mixpanelEvent">Mixpanel event.</param>
-        public static Task<bool> Track (Profile profile, IMixpanelEvent mixpanelEvent)
+        public static Task<MixpanelResponse> Track (Profile profile, IMixpanelEvent mixpanelEvent)
         {
             if (mixpanelEvent == null)
             {
@@ -29,9 +29,9 @@ namespace Mixpanel.NET.PCL
         /// <summary>
         /// Track a new event
         /// </summary>
-        /// <returns>True if event was tracked, false otherwise</returns>
+        /// <returns>The response from mixpanel</returns>
         /// <param name="mixpanelEvent">Mixpanel event.</param>
-        public static Task<bool> Track (IMixpanelEvent mixpanelEvent)
+        public static Task<MixpanelResponse> Track (IMixpanelEvent mixpanelEvent)
         {
             return Track (null, mixpanelEvent);
         }
@@ -39,11 +39,11 @@ namespace Mixpanel.NET.PCL
         /// <summary>
         /// Track a new event
         /// </summary>
-        /// <returns>True if event was tracked, false otherwise</returns>
+        /// <returns>The response from mixpanel</returns>
         /// <param name="profile">Profile.</param>
         /// <param name="eventName">Event name.</param>
         /// <param name="properties">Properties</param>
-        public static Task<bool> Track (Profile profile, string eventName,
+        public static Task<MixpanelResponse> Track (Profile profile, string eventName,
                                         Dictionary<string, object> properties)
         {
             if (Client.Token == null)
@@ -82,10 +82,10 @@ namespace Mixpanel.NET.PCL
         /// <summary>
         /// Track a new event
         /// </summary>
-        /// <returns>True if event was tracked, false otherwise</returns>
+        /// <returns>The response from mixpanel</returns>
         /// <param name="eventName">Event name.</param>
         /// <param name="properties">Properties</param>
-        public static Task<bool> Track (string eventName,
+        public static Task<MixpanelResponse> Track (string eventName,
                                        Dictionary<string, object> properties)
         {
             return Track (null, eventName, properties);
@@ -94,9 +94,9 @@ namespace Mixpanel.NET.PCL
         /// <summary>
         /// Track a new event
         /// </summary>
-        /// <returns>True if event was tracked, false otherwise</returns>
+        /// <returns>The response from mixpanel</returns>
         /// <param name="eventName">Event name.</param>
-        public static Task<bool> Track (string eventName)
+        public static Task<MixpanelResponse> Track (string eventName)
         {
             return Track (null, eventName, null);
         }

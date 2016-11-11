@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Mixpanel.NET.PCL
 {
@@ -23,7 +24,7 @@ namespace Mixpanel.NET.PCL
 
             var request = new HttpRequestMessage (HttpMethod.Post, endpoint)
             {
-                Content = new StringContent ($"data={base64String}")
+                Content = new StringContent ($"data={base64String}&verbose=1")
             };
             request.Content.Headers.ContentType = new MediaTypeHeaderValue ("application/x-www-form-urlencoded");
 
@@ -33,21 +34,23 @@ namespace Mixpanel.NET.PCL
         /// <summary>
         /// Makes the http request given a message
         /// </summary>
-        /// <returns>True if the request succeeded, false otherwise</returns>
+        /// <returns>The response from mixpanel</returns>
         /// <param name="request">The http request message</param>
-        internal static async Task<bool> MakeRequest (HttpRequestMessage request)
+        internal static async Task<MixpanelResponse> MakeRequest(HttpRequestMessage request)
         {
             using (var client = new HttpClient ())
             {
                 var response = await client.SendAsync (request);
                 if (!response.IsSuccessStatusCode)
                 {
-                    return false;
+                    return new MixpanelResponse(false, $"Request status code: {response.StatusCode}");
                 }
 
                 var responseBody = await response.Content.ReadAsStringAsync ();
 
-                return responseBody == Constants.SuccessResponse;
+                var mixpanelResponse = JsonConvert.DeserializeObject<MixpanelResponse> (responseBody);
+
+                return mixpanelResponse;
             }
         }
     }
