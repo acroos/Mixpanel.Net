@@ -39,6 +39,7 @@
     <Compile Include="Profile.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="RequestHelpers.cs" />
+    <Compile Include="MixpanelResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
