@@ -5,15 +5,29 @@ using Mixpanel.NET.PCL.Converters;
 
 namespace Mixpanel.NET.PCL
 {
-    public static class EventTracker
+    public class EventTracker
     {
+        private readonly Dictionary<string, object> _globalProperties;
+
+        public Dictionary<string, object> GlobalProperties => _globalProperties;
+
+        public EventTracker()
+        {
+            _globalProperties = null;
+        }
+
+        public EventTracker(Dictionary<string, object> globalProperties)
+        {
+            _globalProperties = globalProperties;
+        }
+
         /// <summary>
         /// Track a new event
         /// </summary>
         /// <returns>The response from mixpanel</returns>
         /// <param name="profile">Profile.</param>
         /// <param name="mixpanelEvent">Mixpanel event.</param>
-        public static Task<MixpanelResponse> Track (Profile profile, IMixpanelEvent mixpanelEvent)
+        public Task<MixpanelResponse> Track (Profile profile, IMixpanelEvent mixpanelEvent)
         {
             if (mixpanelEvent == null)
             {
@@ -31,7 +45,7 @@ namespace Mixpanel.NET.PCL
         /// </summary>
         /// <returns>The response from mixpanel</returns>
         /// <param name="mixpanelEvent">Mixpanel event.</param>
-        public static Task<MixpanelResponse> Track (IMixpanelEvent mixpanelEvent)
+        public Task<MixpanelResponse> Track (IMixpanelEvent mixpanelEvent)
         {
             return Track (null, mixpanelEvent);
         }
@@ -43,7 +57,7 @@ namespace Mixpanel.NET.PCL
         /// <param name="profile">Profile.</param>
         /// <param name="eventName">Event name.</param>
         /// <param name="properties">Properties</param>
-        public static Task<MixpanelResponse> Track (Profile profile, string eventName,
+        public Task<MixpanelResponse> Track (Profile profile, string eventName,
                                         Dictionary<string, object> properties)
         {
             if (Client.Token == null)
@@ -68,6 +82,14 @@ namespace Mixpanel.NET.PCL
                 properties.Add ("distinct_id", profile.DistinctId);
             }
 
+            if (_globalProperties == null)
+            {
+                foreach(var prop in _globalProperties)
+                {
+                    properties.Add (prop.Key, prop.Value);
+                }
+            }
+
             var dataDictionary = new Dictionary<string, object>
             {
                 { "event", eventName },
@@ -85,7 +107,7 @@ namespace Mixpanel.NET.PCL
         /// <returns>The response from mixpanel</returns>
         /// <param name="eventName">Event name.</param>
         /// <param name="properties">Properties</param>
-        public static Task<MixpanelResponse> Track (string eventName,
+        public Task<MixpanelResponse> Track (string eventName,
                                        Dictionary<string, object> properties)
         {
             return Track (null, eventName, properties);
@@ -96,7 +118,7 @@ namespace Mixpanel.NET.PCL
         /// </summary>
         /// <returns>The response from mixpanel</returns>
         /// <param name="eventName">Event name.</param>
-        public static Task<MixpanelResponse> Track (string eventName)
+        public Task<MixpanelResponse> Track (string eventName)
         {
             return Track (null, eventName, null);
         }
