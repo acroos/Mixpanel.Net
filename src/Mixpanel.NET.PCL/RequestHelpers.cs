@@ -36,7 +36,7 @@ namespace Mixpanel.NET.PCL
         /// </summary>
         /// <returns>The response from mixpanel</returns>
         /// <param name="request">The http request message</param>
-        internal static async Task<MixpanelResponse> GetRequestOutput(HttpRequestMessage request)
+        internal static async Task<MixpanelResponse> MakeRequest(HttpRequestMessage request)
         {
             using (var client = new HttpClient ())
             {

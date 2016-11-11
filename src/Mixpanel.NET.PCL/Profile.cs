@@ -147,7 +147,7 @@ namespace Mixpanel.NET.PCL
             var request =
                 RequestHelpers.GetRequestMessageFromDictionaryAndEndpoint (Constants.EngageUri,
                                                                            dataDictionary);
-            return RequestHelpers.GetRequestOutput (request);
+            return RequestHelpers.MakeRequest (request);
         }
     }
 }
