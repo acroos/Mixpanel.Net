@@ -82,7 +82,7 @@ namespace Mixpanel.NET.PCL
                 properties.Add ("distinct_id", profile.DistinctId);
             }
 
-            if (_globalProperties == null)
+            if (_globalProperties != null)
             {
                 foreach(var prop in _globalProperties)
                 {
