@@ -10,7 +10,7 @@
     <licenseUrl>https://www.github.com/acroos/Mixpanel.Net/blob/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Simple client for tracking events with Mixpanel</description>
-    <releaseNotes>@releaesNotes@</releaseNotes>
+    <releaseNotes>@releaseNotes@</releaseNotes>
     <copyright>Copyright 2016</copyright>
   </metadata>
   <files>
