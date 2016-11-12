@@ -9,7 +9,6 @@ A simple portable class library for communicating with Mixpanel
 (must have mixpanel token)
 
 ```
-using Mixpanel.NET.PCL;
 Client.Initialize("YOUR_MIXPANEL_TOKEN");
 ```
 
