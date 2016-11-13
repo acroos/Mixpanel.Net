@@ -34,7 +34,7 @@ var p = new Profile();
 var properties = new Dictionary<string, object>
 {
     { "Name", "Austin C Roos" },
-    { "Favorite Mammal", "Eliphant" }
+    { "Favorite Mammal", "Elephant" }
 };
 
 p.Set(properties);
