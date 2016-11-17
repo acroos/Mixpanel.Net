@@ -86,5 +86,28 @@ var globalProps = new Dictionary<string, object>
     { "Version", 0.0.0 }
     { "IP", 192.168.101.101 }
 };
-var t = new Tracker(globalProps);
+var t = new EventTracker(globalProps);
+```
+
+You can easily track exceptions by using TrackException
+
+```
+var t = new EventTracker();
+try
+{
+    throw new Exception("wee!");
+}
+catch(Exception e)
+{
+    t.TrackException(e);
+}
+```
+
+You can time events.  Start by calling StartTimedTrackingEvent and finish by calling Track (both with the same event name).  This will automatically add a duration property to your event (in seconds).
+
+```
+var t = new EventTracker();
+t.StartTimedTrackingEvent("Long event");
+Thread.Sleep(100000000000000000);
+t.Track("Long event");
 ```
