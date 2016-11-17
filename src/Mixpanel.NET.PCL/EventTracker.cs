@@ -138,5 +138,65 @@ namespace Mixpanel.NET.PCL
         {
             return Track (null, eventName, null);
         }
+
+        /// <summary>
+        /// Tracks an exception
+        /// </summary>
+        /// <returns>The response from mixpanel</returns>
+        /// <param name="ex">Exception</param>
+        public Task<MixpanelResponse> TrackException(Exception ex)
+        {
+            return TrackException (null, ex, null);
+        }
+
+        /// <summary>
+        /// Tracks an exception
+        /// </summary>
+        /// <returns>The response from mixpanel</returns>
+        /// <param name="ex">Exception</param>
+        /// <param name="profile">Profile</param>
+        public Task<MixpanelResponse> TrackException (Profile profile, Exception ex)
+        {
+            return TrackException (profile, ex, null);
+        }
+
+        /// <summary>
+        /// Tracks an exception
+        /// </summary>
+        /// <returns>The response from mixpanel</returns>
+        /// <param name="ex">Exception</param>
+        /// <param name="eventName">Name of event throwing exception</param>
+        public Task<MixpanelResponse> TrackException (Exception ex, string eventName)
+        {
+            return TrackException (null, ex, eventName);
+        }
+
+        /// <summary>
+        /// Tracks an exception
+        /// </summary>
+        /// <returns>The response from mixpanel</returns>
+        /// <param name="ex">Exception</param>
+        /// <param name="profile">Profile</param>
+        /// <param name="eventName">Name of event throwing exception</param>
+        public Task<MixpanelResponse> TrackException(Profile profile, Exception ex, string eventName)
+        {
+            if (ex == null)
+            {
+                throw new ArgumentNullException (nameof (ex));
+            }
+
+            var properties = new Dictionary<string, object>
+            {
+                { "Message", ex.Message },
+                { "Stack Trace", ex.StackTrace }
+            };
+
+            if (eventName == null)
+            {
+                eventName = ex.GetType ().Name;
+            }
+
+            return Track (profile, eventName, properties);
+        }
     }
 }
