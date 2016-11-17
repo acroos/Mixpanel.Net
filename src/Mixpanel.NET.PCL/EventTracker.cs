@@ -9,16 +9,25 @@ namespace Mixpanel.NET.PCL
     {
         private readonly Dictionary<string, object> _globalProperties;
 
+        private readonly Dictionary<string, DateTime> _timedEvents;
+
         public Dictionary<string, object> GlobalProperties => _globalProperties;
 
         public EventTracker()
         {
             _globalProperties = null;
+            _timedEvents = new Dictionary<string, DateTime> ();
         }
 
         public EventTracker(Dictionary<string, object> globalProperties)
         {
             _globalProperties = globalProperties;
+            _timedEvents = new Dictionary<string, DateTime> ();
+        }
+
+        public void StartTimedTrackingEvent(string name)
+        {
+            _timedEvents.Add (name, DateTime.UtcNow);
         }
 
         /// <summary>
@@ -88,6 +97,13 @@ namespace Mixpanel.NET.PCL
                 {
                     properties.Add (prop.Key, prop.Value);
                 }
+            }
+
+            if (_timedEvents.ContainsKey(eventName))
+            {
+                var duration = DateTime.UtcNow - _timedEvents [eventName];
+                properties.Add ("duration", duration.TotalSeconds);
+                _timedEvents.Remove (eventName);
             }
 
             var dataDictionary = new Dictionary<string, object>
