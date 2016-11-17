@@ -25,6 +25,10 @@ namespace Mixpanel.NET.PCL
             _timedEvents = new Dictionary<string, DateTime> ();
         }
 
+        /// <summary>
+        /// Starts the timed tracking event.
+        /// </summary>
+        /// <param name="name">Event name</param>
         public void StartTimedTrackingEvent(string name)
         {
             _timedEvents.Add (name, DateTime.UtcNow);
