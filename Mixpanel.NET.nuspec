@@ -12,6 +12,10 @@
     <description>Simple client for tracking events with Mixpanel</description>
     <releaseNotes>@releaseNotes@</releaseNotes>
     <copyright>Copyright 2016</copyright>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="9.0.0" />
+    </dependencies>
+
   </metadata>
   <files>
     <file src="Mixpanel.NET.PCL.dll" target="lib" />
