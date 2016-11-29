@@ -13,9 +13,9 @@
     <releaseNotes>@releaseNotes@</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="9.0.0" />
+      <dependency id="Newtonsoft.Json" version="4.5.0" />
+      <dependency id="Microsoft.Net.Http" version="2.2.0" />
     </dependencies>
-
   </metadata>
   <files>
     <file src="Mixpanel.NET.PCL.dll" target="lib" />

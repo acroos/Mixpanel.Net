@@ -1,0 +1,4 @@
+Version 0.0.8
+
+- Adds dependency on Microsoft.Net.Http
+- Lowers dependency version for Newtonsoft.Json
